@@ -1,0 +1,216 @@
+#include <iostream>
+#include <fstream>
+#include <cstring>
+#include <cstdio>
+
+using namespace std;
+
+bool proverka(string w) {
+	bool e = false;
+	ifstream r(w.c_str());
+
+	if (r.is_open())
+		e = true;
+
+	r.close();
+	return e;
+}
+
+class supplier {
+private:
+	char name[100], name1[100], info[1000], code[1000], price[1000], amount[1000];
+	string filename = "base.txt";
+
+public:
+	void func(supplier t[100]) {
+		int z = 0, n = 0, x = 0, l = 0, u, o, p;
+		char buf[100000], y[100], m[100], g[1000], qw[100], wq[1000];
+		string q = "base.txt";
+		if (proverka(q) == false) {
+			ofstream w(q);
+			w << ";~";
+			cout << "Хранлище данных было создано.\n";
+			w.close();
+		};//проверка на сущ. или вывод из файла
+		ifstream k(filename);//вывод из файла
+		k.getline(buf, 100000);
+		k.close();
+		while (true) {
+			if (int(buf[z]) == 126) break;
+			if (x == 0)y[l] = buf[z];
+			if (x == 1)y[l] = buf[z];
+			if (x == 2)g[l] = buf[z];
+			if (x == 3)g[l] = buf[z];
+			if (x == 4)g[l] = buf[z];
+			if (x == 5)g[l] = buf[z];
+			l++;
+			z++;
+			if (int(buf[z]) == 59) {
+				if (x == 0)memcpy(t[n / 6].name, y, strlen(y));
+				if (x == 1)memcpy(t[(n - 1) / 6].name1, y, strlen(y));
+				if (x == 2)memcpy(t[(n - 2) / 6].info, g, strlen(g));
+				if (x == 3)memcpy(t[(n - 3) / 6].code, g, strlen(g));
+				if (x == 4)memcpy(t[(n - 4) / 6].price, g, strlen(g));
+				if (x == 5)memcpy(t[(n - 5) / 6].amount, g, strlen(g));
+				memcpy(y, qw, strlen(y));
+				memcpy(g, wq, strlen(g));
+				n++;
+				x = n % 6;
+				l = 0;
+			};
+		};
+		n = n / 6;
+		for (int r = 0; r < n; r++) {
+			for (int p = 0; p < 100; p++)t[r].name[p] = t[r].name[p + 1];
+			for (int p = 0; p < 100; p++)t[r].name1[p] = t[r].name1[p + 1];
+			for (int p = 0; p < 100; p++)t[r].info[p] = t[r].info[p + 1];
+			for (int p = 0; p < 100; p++)t[r].price[p] = t[r].price[p + 1];
+			for (int p = 0; p < 100; p++)t[r].code[p] = t[r].code[p + 1];
+			for (int p = 0; p < 100; p++)t[r].amount[p] = t[r].amount[p + 1];
+
+		};
+		while (true) {
+			cout << "\nЧто вы хотите сделать?\n1)Создать запись.\n2)Редактировать запись.\n3)Удалить запись.\n4)Начать поиск.\n5)Вывести все записи.\n6)Выйти.\n";
+			cin >> x;
+			if (x == 1) {
+				if (n == 9) { cout << "Максимум записей достигнут."; }
+				else {
+					cout << "Введите название товара: ";
+					cin.getline(t[n].name, 100, '.');
+					for (int p = 0; p < 100; p++) {
+						t[n].name[p] = t[n].name[p + 1];
+					};
+					cout << "Введите Имя поставщика:";
+					cin.getline(t[n].name1, 100, '.');
+					for (int p = 0; p < 100; p++) {
+						t[n].name1[p] = t[n].name1[p + 1];
+					};
+					cout << "Введите информацию о товаре: ";
+					cin.getline(t[n].info, 1000, '.');
+					for (int p = 0; p < 100; p++) {
+						t[n].info[p] = t[n].info[p + 1];
+					};
+					cout << "Введите код товара: ";
+					cin.getline(t[n].code, 100, '.');
+					for (int p = 0; p < 100; p++) {
+						t[n].code[p] = t[n].code[p + 1];
+					};
+					cout << "Введите цену товара: ";
+					cin.getline(t[n].price, 100, '.');
+					for (int p = 0; p < 100; p++) {
+						t[n].price[p] = t[n].price[p + 1];
+					};
+					cout << "Введите количество товара:";
+					cin.getline(t[n].amount, 100, '.');
+					for (int p = 0; p < 100; p++) {
+						t[n].amount[p] = t[n].amount[p + 1];
+					};
+					n++;
+				};
+			};
+			if (x == 2) {
+				if (n == 0) {
+					cout << "Отсутвуют записи.";
+				}
+				else {
+					cout << "Какую запись вы хотите изменить?\nВведите ее номер: ";
+					cin >> u;
+					cout << "Введите новую информацию о товаре: ";
+					cin.getline(t[u].info, 1000, '.');
+					for (int p = 0; p < 100; p++) {
+						t[u].info[p] = t[u].info[p + 1];
+					};
+					cout << "Введите новый код товара: ";
+					cin.getline(t[u].code, 100, '.');
+					for (int p = 0; p < 100; p++) {
+						t[u].code[p] = t[u].code[p + 1];
+					};
+					cout << "Введите новую цену товара: ";
+					cin.getline(t[u].price, 100, '.');
+					for (int p = 0; p < 100; p++) {
+						t[u].price[p] = t[u].price[p + 1];
+					};
+					cout << "Введите количество товара:";
+					cin.getline(t[u].amount, 100, '.');
+					for (int p = 0; p < 100; p++) {
+						t[u].price[p] = t[u].price[p + 1];
+
+					};
+				};
+			};
+			if (x == 3) {
+				if (n == 0) {
+					cout << "Отсутвуют записи.";
+				}
+				else {
+					cout << "Какую запись вы хотите удалить?\nВведите ее номер: ";
+					cin >> u;
+					for (u; u < n; u++)
+						t[u] = t[u + 1];
+					n--;
+				};
+			};
+			if (x == 4) {
+				if (n == 0) {
+					cout << "Отсутвуют записи.";
+				}
+				else {
+					cout << "Вы хотите провести поиск по именам поставщиков(1) или по названиям товаров(2)?";
+					cin >> o;
+					if (o == 1) {
+						cout << "Введите имя поставщика:";
+						cin.getline(y, 100, '.');
+						for (p = 0; p < 100; p++) {
+							y[p] = y[p + 1];
+						};
+						cout << "\n- - - - - - - - - - - - - - - - - - - - - - - -\nПо запросу был(и) найден(ы):\n- - - - - - - -\n";
+						for (u = 0; u < n; u++) {
+							if (strcmp(t[u].name1, y) == 0) {
+								for (u = 0; u < n; u++)cout << "Товар №" << u << ": " << t[u].name << "\n- - - -\nПоставщик: " << t[u].name1 << "\n- - - -\nИнформация: " << t[u].info << "\n- - - -\nКод: " << t[u].code << "\n- - - -\nЦена: " << t[u].price << "\n- - - -\nКоличество: " << t[u].amount << "\n- - - - - - - -\n";
+							};
+
+						};
+						if (o == 2) {
+							cout << "Введите название искомого прдемета:";
+							cin.getline(y, 100, '.');
+							for (p = 0; p < 100; p++) {
+								y[p] = y[p + 1];
+							};
+							cout << "\n- - - - - - - - - - - - - - - - - - - - - - - -\nПо запросу был(и) найден(ы):\n- - - - - - - -\n";
+							for (u = 0; u < n; u++) {
+								if (strcmp(t[u].name, y) == 0) {
+									for (u = 0; u < n; u++)cout << "Товар №" << u << ": " << t[u].name << "\n- - - -\nПоставщик: " << t[u].name1 << "\n- - - -\nИнформация: " << t[u].info << "\n- - - -\nКод: " << t[u].code << "\n- - - -\nЦена: " << t[u].price << "\n- - - -\nКоличество: " << t[u].amount << "\n- - - - - - - -\n";
+								};
+							};
+						};
+					};
+				};
+			};
+			if (x == 5) {
+				if (n == 0) {
+					cout << "Отсутвуют записи.";
+				}
+				else {
+					cout << "\n- - - - - - - -\n";
+					for (u = 0; u < n; u++)cout << "Товар №" << u << ": " << t[u].name << "\n- - - -\nПоставщик: " << t[u].name1 << "\n- - - -\nИнформация: " << t[u].info << "\n- - - -\nКод: " << t[u].code << "\n- - - -\nЦена: " << t[u].price << "\n- - - -\nКоличество: " << t[u].amount << "\n- - - - - - - -\n";
+				};
+			};
+			if (x == 6) break;
+		};
+
+		ofstream w(q);
+		w.write("", 0);
+		for (int r = 0; r < n; r++) w << ";" << t[r].name << ";" << t[r].name1 << ";" << t[r].info << ";" << t[r].code << ";" << t[r].price << ";" << t[r].amount;
+		w << ";~";
+		w.close();
+	};
+};
+
+int main() {
+
+	setlocale(LC_ALL, "rus");
+	supplier* port = new supplier[100];
+	port[0].func(port);
+	cout << "Работа завершена.";
+	return 0;
+}
