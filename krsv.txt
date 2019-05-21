@@ -30,8 +30,7 @@ public:
 
 	void func(supplier t[100]) {
 
-		SetConsoleCP(1251);
-		SetConsoleOutputCP(1251);
+		setlocale(LC_ALL,"rus");
 
 		int z = 0, n = 0, x = 0, l = 0, u, o, p;
 
